@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Nickos C. Armijo &mdash; Junior PHP/Laravel Developer</title>
+<meta name="description" content="Nickos C. Armijo - Junior PHP/Laravel developer and BS Information Technology graduate building Laravel REST APIs and React front ends. Tanza, Cavite, Philippines." />
+<meta property="og:title" content="Nickos C. Armijo — Junior PHP/Laravel Developer" />
+<meta property="og:description" content="Nickos C. Armijo - Junior PHP/Laravel developer and BS Information Technology graduate building Laravel REST APIs and React front ends. Tanza, Cavite, Philippines." />
+<meta property="og:type" content="profile" />
+<meta property="og:image" content="assets/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23070b0a'/%3E%3Ctext x='50' y='68' font-family='monospace' font-size='52' font-weight='700' fill='%2310b981' text-anchor='middle'%3ENA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#060a09;
+    --surface:rgba(255,255,255,.035);
+    --surface-2:rgba(255,255,255,.055);
+    --border:rgba(255,255,255,.09);
+    --border-hi:rgba(45,212,191,.35);
+    --text:#e8efec;
+    --muted:#92a59f;
+    --accent:#10b981;
+    --accent-2:#2dd4bf;
+    --warn:#eab308;
+    --grad:linear-gradient(135deg,#10b981 0%,#2dd4bf 100%);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:90px;background:var(--bg)}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:rgba(16,185,129,.28);color:#fff}
+  /* ambient ground: two soft glows over a fine dot grid */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(60rem 40rem at calc(78% + var(--gx,0px)) calc(-10% + var(--gy,0px)),rgba(16,185,129,.16),transparent 60%),
+      radial-gradient(45rem 35rem at calc(5% - var(--gx,0px)) calc(8% - var(--gy,0px)),rgba(45,212,191,.10),transparent 60%);
+    transition:background-position .3s ease-out;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:radial-gradient(rgba(255,255,255,.10) 1px,transparent 1px);
+    background-size:34px 34px;
+    -webkit-mask-image:radial-gradient(70% 55% at 50% 0%,#000 0%,transparent 78%);
+    mask-image:radial-gradient(70% 55% at 50% 0%,#000 0%,transparent 78%);
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding-inline:20px;position:relative;z-index:1}
+  a{color:inherit;text-decoration:none}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent-2);outline-offset:3px;border-radius:8px}
+  h1,h2,h3,h4{line-height:1.2;margin:0;text-wrap:balance}
+
+  /* ---------- icon system ---------- */
+  .ico{
+    width:1em;height:1em;flex:0 0 auto;display:block;
+    fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+    vector-effect:non-scaling-stroke;
+  }
+  .ico-solid{fill:currentColor;stroke:none}
+  .ico text{fill:currentColor;stroke:none;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;text-anchor:middle}
+  .ico .dotfill{fill:currentColor}
+
+  /* ---------- scroll progress ---------- */
+  #prog{
+    position:fixed;top:env(safe-area-inset-top,0px);left:0;height:2px;width:0;z-index:60;
+    background:var(--grad);box-shadow:0 0 12px rgba(16,185,129,.6);
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:rgba(6,10,9,.82);border-bottom:1px solid transparent;transition:border-color .3s,background .3s;
+  }
+  header.scrolled{border-bottom-color:var(--border);background:rgba(6,10,9,.93)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:66px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;color:var(--text)}
+  .logo .mark{
+    width:34px;height:34px;border-radius:10px;background:var(--grad);color:#04120d;
+    display:grid;place-items:center;font-size:14px;font-weight:800;font-family:'JetBrains Mono',ui-monospace,monospace;
+  }
+  .nav-links{display:flex;gap:4px;align-items:center}
+  .nav-links a{
+    position:relative;padding:8px 13px;border-radius:9px;font-size:14.5px;color:var(--muted);
+    font-weight:500;transition:color .2s,background .2s;
+  }
+  .nav-links a:hover{color:var(--text);background:var(--surface)}
+  .nav-links a.active{color:var(--accent-2)}
+  .nav-links a.active::after{
+    content:"";position:absolute;left:13px;right:13px;bottom:2px;height:2px;border-radius:2px;background:var(--grad);
+  }
+  .burger{
+    display:none;background:var(--surface);border:1px solid var(--border);color:var(--text);
+    width:42px;height:38px;border-radius:10px;font-size:18px;cursor:pointer;align-items:center;justify-content:center;
+  }
+  @media(max-width:880px){
+    .burger{display:flex}
+    .nav-links{
+      position:absolute;top:66px;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;
+      background:#080d0c;border-bottom:1px solid var(--border);padding:10px 20px 18px;
+      box-shadow:0 22px 40px -18px rgba(0,0,0,.9);display:none;
+    }
+    .nav-links.open{display:flex}
+    .nav-links a{padding:11px 12px;font-size:15.5px}
+    .nav-links a.active::after{display:none}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding-block:70px 40px;text-align:center}
+  .avatar{
+    width:128px;height:128px;margin:0 auto 24px;border-radius:50%;
+    background:var(--grad);padding:3px;box-shadow:0 0 0 8px rgba(16,185,129,.07),0 18px 50px -18px rgba(16,185,129,.55);
+  }
+  .avatar img{width:100%;height:100%;max-width:100%;border-radius:50%;object-fit:cover;display:block}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+    border:1px solid var(--border);background:var(--surface);font-size:13px;color:var(--muted);margin-bottom:20px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(16,185,129,.18);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+  .hero h1{font-size:clamp(2.05rem,6vw,3.5rem);font-weight:800;letter-spacing:-.035em}
+  .hero .role{
+    margin:14px 0 0;font-size:clamp(1.02rem,3vw,1.35rem);font-weight:600;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{max-width:62ch;margin:20px auto 0;color:var(--muted);font-size:clamp(.98rem,2.4vw,1.05rem)}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
+  .btn{
+    padding:12px 22px;border-radius:11px;font-weight:600;font-size:14.5px;border:1px solid transparent;
+    transition:transform .18s,box-shadow .2s,background .2s,border-color .2s;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn .ico{font-size:17px}
+  .btn-primary{background:var(--grad);color:#04120d;box-shadow:0 12px 30px -12px rgba(16,185,129,.7)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 38px -14px rgba(16,185,129,.85)}
+  .btn-ghost{border-color:var(--border);color:var(--text);background:var(--surface)}
+  .btn-ghost:hover{border-color:var(--border-hi);transform:translateY(-2px);background:var(--surface-2)}
+
+  /* scroll cue — fades away the moment you start reading */
+  .cue{
+    display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:44px;
+    color:var(--muted);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;
+    letter-spacing:.16em;text-transform:uppercase;opacity:1;transition:opacity .4s;
+  }
+  .cue.gone{opacity:0;pointer-events:none}
+  .cue .ico{font-size:18px;animation:bob 2.2s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+  /* ---------- tech marquee ---------- */
+  .marquee{
+    position:relative;z-index:1;margin-top:40px;overflow:hidden;
+    border-block:1px solid var(--border);padding-block:16px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  }
+  .track{display:flex;width:max-content;gap:38px;animation:slide 38s linear infinite}
+  .marquee:hover .track{animation-play-state:paused}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .track .t{
+    display:inline-flex;align-items:center;gap:9px;color:var(--muted);
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;white-space:nowrap;
+    transition:color .2s;
+  }
+  .track .t .ico{font-size:19px}
+  .track .t:hover{color:var(--accent-2)}
+
+  /* ---------- sections ---------- */
+  section{padding-block:74px;position:relative;z-index:1}
+  .sec-head{text-align:center;margin-bottom:44px}
+  .sec-kicker{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent-2);
+  }
+  .sec-kicker .ico{font-size:15px}
+  .sec-head h2{font-size:clamp(1.6rem,4.4vw,2.25rem);font-weight:800;letter-spacing:-.03em;margin-top:10px}
+  .sec-head p{color:var(--muted);margin:12px auto 0;max-width:58ch;font-size:15px}
+  .rule{width:56px;height:3px;border-radius:3px;background:var(--grad);margin:16px auto 0}
+
+  .card{
+    position:relative;isolation:isolate;
+    border:1px solid var(--border);background:var(--surface);border-radius:var(--radius);padding:24px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+    transition:border-color .25s,transform .25s,background .25s;
+  }
+  .card:hover{border-color:var(--border-hi);transform:translateY(-4px);background:var(--surface-2)}
+  /* a soft light that tracks the cursor — sits under the text, never over it */
+  .card::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
+    opacity:0;transition:opacity .3s;
+    background:radial-gradient(280px circle at var(--mx,50%) var(--my,0%),rgba(45,212,191,.14),transparent 68%);
+  }
+  @media(hover:hover) and (pointer:fine){.card:hover::after{opacity:1}}
+
+  /* icon tile used by skill cards, facts, projects, list items */
+  .tile{
+    display:grid;place-items:center;flex:0 0 auto;border-radius:11px;
+    background:rgba(16,185,129,.11);border:1px solid rgba(16,185,129,.26);color:var(--accent-2);
+  }
+  .tile.sm{width:36px;height:36px;font-size:19px}
+  .tile.md{width:42px;height:42px;font-size:22px}
+
+  .about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start}
+  @media(max-width:880px){.about-grid{grid-template-columns:1fr}}
+  .about p{color:var(--muted);margin:0 0 14px}
+  .about p strong{color:var(--text);font-weight:600}
+  .facts{display:flex;flex-direction:column;gap:14px}
+  .fact{display:flex;gap:13px;align-items:flex-start}
+  .fact h4{margin:0;font-size:14.5px;font-weight:600}
+  .fact span{font-size:13.5px;color:var(--muted)}
+
+  /* chronology — a real sequence, so the rail earns its place */
+  .timeline{margin-top:28px;display:flex;flex-direction:column;gap:20px}
+  .tl-item{display:flex;gap:15px;align-items:flex-start;position:relative}
+  .tl-item:not(:last-child)::before{
+    content:"";position:absolute;left:17px;top:38px;bottom:-20px;width:1px;background:var(--border);
+  }
+  .tl-item .tile{position:relative;z-index:1;background:rgba(16,185,129,.11)}
+  .tl-item .yr{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;color:var(--accent-2)}
+  .tl-item h4{margin:2px 0 4px;font-size:15.5px;font-weight:650}
+  .tl-item p{margin:0;font-size:14px;color:var(--muted)}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;align-items:start}
+  .skill-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .skill-head h3{font-size:15.5px;font-weight:650}
+  .skill-head .n{
+    margin-left:auto;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--muted);
+  }
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;padding:6px 11px;border-radius:9px;
+    border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);
+    transition:color .2s,border-color .2s,background .2s;
+  }
+  .pill .ico{font-size:15px;color:var(--accent-2);opacity:.85;transition:opacity .2s}
+  .pill:hover{color:var(--text);border-color:var(--border-hi);background:rgba(45,212,191,.07)}
+  .pill:hover .ico{opacity:1}
+
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;align-items:start}
+  .proj.feature{grid-column:1 / -1}
+  @media(max-width:820px){.proj-grid{grid-template-columns:1fr}}
+
+  /* module disclosure — collapsed by default, real depth when opened */
+  .mods{border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.02);margin-top:2px}
+  .mods summary{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:13px 16px;cursor:pointer;list-style:none;font-size:14px;font-weight:600;color:var(--text);
+  }
+  .mods summary::-webkit-details-marker{display:none}
+  .mods summary:hover{color:var(--accent-2)}
+  .sum-label{display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;font-weight:500}
+  .sum-label .ico{font-size:17px;color:var(--accent-2)}
+  .chev{display:grid;place-items:center;font-size:18px;color:var(--muted);transition:transform .25s}
+  .mods[open] .chev{transform:rotate(180deg)}
+  .mod-grid{
+    columns:3;column-gap:24px;padding:16px 16px 6px;border-top:1px solid var(--border);
+  }
+  @media(max-width:1000px){.mod-grid{columns:2}}
+  @media(max-width:700px){.mod-grid{columns:1}}
+  .mod{display:flex;gap:12px;align-items:flex-start;break-inside:avoid;margin-bottom:20px}
+  .mod h4{font-size:14.5px;font-weight:650;margin:0 0 4px}
+  .mod p{margin:0;font-size:13.4px;color:var(--muted)}
+  .guard-wrap{padding:0 16px 18px}
+  .guard-title{
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--accent-2);margin-bottom:11px;
+  }
+  .guards{display:flex;flex-wrap:wrap;gap:8px}
+  .guard{
+    display:inline-flex;align-items:center;gap:6px;font-size:12.6px;padding:5px 10px;border-radius:8px;
+    border:1px solid rgba(16,185,129,.22);background:rgba(16,185,129,.07);color:var(--muted);
+  }
+  .guard .ico{font-size:13px;color:var(--accent)}
+  .proj code{
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.6px;
+    padding:1px 5px;border-radius:5px;background:rgba(255,255,255,.06);color:var(--accent-2);
+  }
+  .proj{display:flex;flex-direction:column;gap:14px;overflow:hidden}
+  .proj::before{
+    content:"";position:absolute;inset:0 0 auto 0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(45,212,191,.55),transparent);
+    opacity:0;transition:opacity .3s;
+  }
+  .proj:hover::before{opacity:1}
+  .proj-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .tag{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;padding:4px 9px;border-radius:999px;
+    border:1px solid rgba(45,212,191,.3);color:var(--accent-2);background:rgba(45,212,191,.08);white-space:nowrap;
+  }
+  .tag.wip{border-color:rgba(234,179,8,.32);color:var(--warn);background:rgba(234,179,8,.08)}
+  .tag .ico{font-size:12px}
+  .proj h3{font-size:17.5px;font-weight:700;letter-spacing:-.01em}
+  .proj .stack{display:flex;flex-wrap:wrap;gap:7px;margin-top:-4px}
+  .proj ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .proj li{font-size:14.3px;color:var(--muted)}
+  .proj li::marker{color:var(--accent)}
+  .proj .links{display:flex;gap:16px;font-size:13.5px;font-weight:600;color:var(--accent-2);padding-top:2px}
+  .proj .links a{display:inline-flex;align-items:center;gap:7px;border-bottom:1px solid transparent;transition:border-color .2s;word-break:break-word}
+  .proj .links a .ico{font-size:15px}
+  .proj .links a:hover{border-bottom-color:var(--accent-2)}
+
+  .list-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .item{display:flex;gap:15px;align-items:flex-start}
+  .item h3{font-size:15.5px;font-weight:650;margin-bottom:5px}
+  .item p{margin:0;font-size:13.8px;color:var(--muted)}
+  .item .yr{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--accent-2);display:block;margin-top:6px}
+
+  .contact-card{max-width:760px;margin:0 auto;text-align:center;padding:42px 26px}
+  .contact-card h3{font-size:clamp(1.28rem,3.6vw,1.65rem);font-weight:750;letter-spacing:-.02em}
+  .contact-card > p{color:var(--muted);margin:14px auto 0;max-width:54ch;font-size:15px}
+  .socials{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px}
+  .social{
+    display:inline-flex;align-items:center;gap:9px;padding:11px 18px;border-radius:11px;
+    border:1px solid var(--border);background:var(--surface);font-size:14px;font-weight:550;color:var(--text);
+    transition:border-color .2s,transform .2s,background .2s;
+  }
+  .social .ico{font-size:17px;color:var(--accent-2)}
+  .social:hover{border-color:var(--border-hi);transform:translateY(-2px);background:var(--surface-2)}
+  /* chip that pairs a link with a copy button */
+  .chip{
+    display:inline-flex;align-items:stretch;border-radius:11px;overflow:hidden;
+    border:1px solid var(--border);background:var(--surface);
+    transition:border-color .2s,transform .2s,background .2s;
+  }
+  .chip:hover{border-color:var(--border-hi);transform:translateY(-2px);background:var(--surface-2)}
+  .chip > a{display:inline-flex;align-items:center;gap:9px;padding:11px 14px 11px 18px;font-size:14px;font-weight:550}
+  .chip > a .ico{font-size:17px;color:var(--accent-2)}
+  .copy{
+    position:relative;display:grid;place-items:center;width:44px;font-size:16px;cursor:pointer;
+    background:none;border:0;border-left:1px solid var(--border);color:var(--muted);
+    transition:color .2s,background .2s;
+  }
+  .copy:hover{color:var(--accent-2);background:rgba(45,212,191,.08)}
+  .copy .ico-check{display:none;color:var(--accent)}
+  .copy.done .ico-copy{display:none}
+  .copy.done .ico-check{display:block}
+  .copy.done{color:var(--accent)}
+  .copy::after{
+    content:"Copied";position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;
+    padding:4px 8px;border-radius:6px;background:#0d1614;border:1px solid var(--border-hi);color:var(--accent-2);
+    opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;white-space:nowrap;
+  }
+  .copy.done::after{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* floating back-to-top */
+  .to-top{
+    position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:55;
+    width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:19px;
+    border:1px solid var(--border);background:rgba(10,16,14,.9);color:var(--text);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer;
+    opacity:0;transform:translateY(10px);pointer-events:none;
+    transition:opacity .3s,transform .3s,border-color .2s;
+  }
+  .to-top.show{opacity:1;transform:none;pointer-events:auto}
+  .to-top:hover{border-color:var(--border-hi);color:var(--accent-2)}
+  .loc{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-size:14px;color:var(--muted)}
+  .loc .ico{font-size:16px;color:var(--accent-2)}
+
+  footer{border-top:1px solid var(--border);padding-block:28px;position:relative;z-index:1}
+  .foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;font-size:13.5px;color:var(--muted)}
+  .foot .built{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .dot{animation:none}
+    .track{animation:none}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<header id="top-nav">
+  <div class="wrap nav">
+    <a href="#home" class="logo"><span class="mark">NA</span> Nickos Armijo</a>
+    <nav class="nav-links" id="navlinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#awards">Awards</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+  </div>
+</header>
+
+<main id="home" class="wrap hero">
+  <div class="avatar"><img src="assets/profile.jpg" alt="Nickos C. Armijo" width="400" height="400" /></div>
+
+  <div class="badge"><span class="dot"></span> Available for opportunities &mdash; 2026</div>
+  <h1>Nickos C. Armijo</h1>
+  <p class="role">Junior PHP / Laravel Developer &nbsp;|&nbsp; React</p>
+  <p class="lead">
+    BS Information Technology graduate building full-stack web applications &mdash; role-based Laravel
+    systems, REST APIs with Sanctum authentication, React&nbsp;+&nbsp;Vite front ends, and a C#/ASP.NET Core
+    service on the side. Trained in manual testing and defect documentation. Based in Tanza, Cavite.
+  </p>
+
+  <div class="cta">
+    <a class="btn btn-primary" href="#projects">View Projects &rarr;</a>
+    <a class="btn btn-ghost" href="#contact"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="2.2"/><path d="m3.8 7 8.2 5.8L20.2 7"/></svg> Get in Touch</a>
+    <a class="btn btn-ghost" href="assets/nickos-armijo-resume.pdf" download="Nickos-Armijo-Resume.pdf"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 4a.8.8 0 0 1 .8-.8h7.2L18.4 7.8V20a.8.8 0 0 1-.8.8H6.4a.8.8 0 0 1-.8-.8z"/><path d="M13.4 3.4v4.6h4.8"/><path d="M8.4 14.4l2.2 2.2 4.2-4.4"/></svg> Download Resume</a>
+  </div>
+
+  <div class="cue" id="cue">Scroll <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 9.2 12 15.6l6.4-6.4"/></svg></div>
+</main>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track"><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="10.4" ry="6.8"/><text x="12" y="15" font-size="8.6">php</text></svg>PHP</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 3.6h3.6v12.4h11.2l-3.6 4H4.6z"/><path d="M8.2 16v4"/></svg>Laravel</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="4.6" cy="12" r="2.2"/><circle cx="19.4" cy="12" r="2.2"/><path d="M6.8 12h2.4M14.8 12h2.4"/><path d="M13.4 5.6 9.6 12.4h3l-1 6 3.8-6.8h-3z"/></svg>Livewire</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.4"/><path d="M2.6 12h5.2M16.2 12h5.2"/><path d="M6 9.4 8.6 12 6 14.6"/><path d="M18 9.4 20.6 12 18 14.6"/></svg>REST API</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.1"/><ellipse cx="12" cy="12" rx="10" ry="4.1"/><ellipse cx="12" cy="12" rx="10" ry="4.1" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.1" transform="rotate(120 12 12)"/></svg>React</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 4.8 12 20.8l8.8-16"/><path d="M13.8 7.4 9.8 12.8h3.1l-1.1 4.2 4.4-5.6h-3.1z"/></svg>Vite</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.6" font-size="8">JS</text></svg>JavaScript</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8 .9.2 1.6.9 2.3 1.7 1.2 1.2 2.6 2.7 5.5 2.7 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.7-1.2-1.2-2.6-2.7-5.5-2.7z" transform="translate(-3 0)"/><path d="M6 13.4c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.7 1.2 1.2 2.6 2.7 5.5 2.7 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.7-1.2-1.2-2.6-2.7-5.5-2.7z" transform="translate(3 -1.6)"/></svg>Tailwind</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.6 19.4 9.4 7.6l4 6.8"/><path d="M11.6 19.4 16.4 11l5 8.4z"/><path d="M2.6 19.4h18.8"/></svg>Alpine.js</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="11" cy="6" rx="6.6" ry="2.6"/><path d="M4.4 6v7.6c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6V6"/><path d="M4.4 10.2c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6"/><path d="M13.6 21c3-.6 5.4-3 6-6-2.6.4-5 2.8-6 6z"/></svg>MySQL</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12.6" cy="5.8" rx="6.6" ry="2.6"/><path d="M6 5.8v7c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6v-7"/><path d="M6 9.8c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6"/><path d="M6 13.6c-2.2.9-3.4 2.6-3.4 4.4 0 1.6.9 2.6 2 2.6 1.4 0 2-1.4 2-3.2"/></svg>PostgreSQL</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.8 2.6 4.2 12.8a.8.8 0 0 0 .6 1.3h6.4v7.3l8.6-10.2a.8.8 0 0 0-.6-1.3h-6.4z"/></svg>Supabase</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="7.6">C#</text></svg>C#</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="6.2">.NET</text></svg>ASP.NET Core</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="7.6">EF</text></svg>EF Core</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.4" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="8.5" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="12.6" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="8.5" y="6.6" width="3.3" height="3.3" rx=".5"/><path d="M2.4 15.4h17.4a3.9 3.9 0 0 1-3.9 3.8H7.9a5.5 5.5 0 0 1-5.5-3.8z"/><path d="M19.4 12.6c.9-.7 1.7-.5 2.2.3"/></svg>Docker</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.4" cy="5.4" r="2.3"/><circle cx="6.4" cy="18.6" r="2.3"/><circle cx="17.6" cy="8.6" r="2.3"/><path d="M6.4 7.7v8.6"/><path d="M17.6 10.9c0 3.8-3.2 5.6-7 6"/></svg>Git</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.8A1.8 1.8 0 0 1 6.8 3H19v14.2H6.8A1.8 1.8 0 0 0 5 19z"/><path d="M5 19a1.8 1.8 0 0 0 1.8 1.8H19v-3.6"/><path d="M8.6 7.2h6.8M8.6 10.4h4.4"/></svg>GitHub</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="10.4" ry="6.8"/><text x="12" y="15" font-size="8.6">php</text></svg>PHP</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 3.6h3.6v12.4h11.2l-3.6 4H4.6z"/><path d="M8.2 16v4"/></svg>Laravel</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="4.6" cy="12" r="2.2"/><circle cx="19.4" cy="12" r="2.2"/><path d="M6.8 12h2.4M14.8 12h2.4"/><path d="M13.4 5.6 9.6 12.4h3l-1 6 3.8-6.8h-3z"/></svg>Livewire</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.4"/><path d="M2.6 12h5.2M16.2 12h5.2"/><path d="M6 9.4 8.6 12 6 14.6"/><path d="M18 9.4 20.6 12 18 14.6"/></svg>REST API</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.1"/><ellipse cx="12" cy="12" rx="10" ry="4.1"/><ellipse cx="12" cy="12" rx="10" ry="4.1" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.1" transform="rotate(120 12 12)"/></svg>React</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 4.8 12 20.8l8.8-16"/><path d="M13.8 7.4 9.8 12.8h3.1l-1.1 4.2 4.4-5.6h-3.1z"/></svg>Vite</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.6" font-size="8">JS</text></svg>JavaScript</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8 .9.2 1.6.9 2.3 1.7 1.2 1.2 2.6 2.7 5.5 2.7 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.7-1.2-1.2-2.6-2.7-5.5-2.7z" transform="translate(-3 0)"/><path d="M6 13.4c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.7 1.2 1.2 2.6 2.7 5.5 2.7 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.7-1.2-1.2-2.6-2.7-5.5-2.7z" transform="translate(3 -1.6)"/></svg>Tailwind</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.6 19.4 9.4 7.6l4 6.8"/><path d="M11.6 19.4 16.4 11l5 8.4z"/><path d="M2.6 19.4h18.8"/></svg>Alpine.js</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="11" cy="6" rx="6.6" ry="2.6"/><path d="M4.4 6v7.6c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6V6"/><path d="M4.4 10.2c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6"/><path d="M13.6 21c3-.6 5.4-3 6-6-2.6.4-5 2.8-6 6z"/></svg>MySQL</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12.6" cy="5.8" rx="6.6" ry="2.6"/><path d="M6 5.8v7c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6v-7"/><path d="M6 9.8c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6"/><path d="M6 13.6c-2.2.9-3.4 2.6-3.4 4.4 0 1.6.9 2.6 2 2.6 1.4 0 2-1.4 2-3.2"/></svg>PostgreSQL</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.8 2.6 4.2 12.8a.8.8 0 0 0 .6 1.3h6.4v7.3l8.6-10.2a.8.8 0 0 0-.6-1.3h-6.4z"/></svg>Supabase</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="7.6">C#</text></svg>C#</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="6.2">.NET</text></svg>ASP.NET Core</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="7.6">EF</text></svg>EF Core</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.4" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="8.5" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="12.6" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="8.5" y="6.6" width="3.3" height="3.3" rx=".5"/><path d="M2.4 15.4h17.4a3.9 3.9 0 0 1-3.9 3.8H7.9a5.5 5.5 0 0 1-5.5-3.8z"/><path d="M19.4 12.6c.9-.7 1.7-.5 2.2.3"/></svg>Docker</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.4" cy="5.4" r="2.3"/><circle cx="6.4" cy="18.6" r="2.3"/><circle cx="17.6" cy="8.6" r="2.3"/><path d="M6.4 7.7v8.6"/><path d="M17.6 10.9c0 3.8-3.2 5.6-7 6"/></svg>Git</span><span class="t"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.8A1.8 1.8 0 0 1 6.8 3H19v14.2H6.8A1.8 1.8 0 0 0 5 19z"/><path d="M5 19a1.8 1.8 0 0 0 1.8 1.8H19v-3.6"/><path d="M8.6 7.2h6.8M8.6 10.4h4.4"/></svg>GitHub</span></div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.6" cy="10.6" r="6.6"/><path d="M15.4 15.4 20.6 20.6"/><path d="M7.8 10.6 9.9 12.7l3.4-3.6"/></svg> About</div>
+      <h2>A little background</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="card about">
+        <p>
+          I'm a <strong>BS Information Technology</strong> graduate from Granby Colleges of Science and
+          Technology, working as a junior PHP/Laravel developer. Most of what I know I learned by building:
+          full-stack web applications using Laravel, PHP, React, JavaScript, MySQL, PostgreSQL and Supabase.
+        </p>
+        <p>
+          On the back end I build <strong>REST APIs</strong>, role-based authorization, authentication,
+          validation and relational database features &mdash; in Laravel with Livewire and Eloquent, and in
+          <strong>C# with ASP.NET Core and EF Core</strong>. On the front end I work in
+          <strong>React with Vite</strong>, plus Blade, Tailwind, Alpine.js and Axios against those APIs.
+        </p>
+        <p>
+          My IT internship at Tanza Specialist Medical Center covered the other half of the job &mdash;
+          executing manual test cases to verify system functionality, data accuracy and consistency, and
+          documenting defects so issues could actually be tracked and fixed.
+        </p>
+
+        <div class="timeline">
+          <div class="tl-item"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 8h11.6l-1.2 11.4a1.7 1.7 0 0 1-1.7 1.5H9.1a1.7 1.7 0 0 1-1.7-1.5z"/><path d="M5.4 8 6.9 3.6h10.2L18.6 8"/><path d="M9.8 11.6l.5 5.8M14.2 11.6l-.5 5.8"/></svg></span>
+            <div><div class="yr">2022</div><h4>Service Crew &mdash; McDonald's, Tanza</h4><p>Standardized procedures, order accuracy and teamwork in a fast-paced environment.</p></div></div>
+          <div class="tl-item"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 3v7a2.4 2.4 0 0 0 4.8 0V3"/><path d="M8.6 10.6V21"/><path d="M17.2 3c-1.7 1.3-2.6 3.2-2.6 5.6 0 1.9.9 3 2.6 3.3V21"/></svg></span>
+            <div><div class="yr">2024</div><h4>Food &amp; Beverage Staff &mdash; Villa Excellance</h4><p>Daily operations with a steady bar for service quality, accuracy and customer care.</p></div></div>
+          <div class="tl-item"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.4" width="18.8" height="14" rx="2"/><path d="M8.4 21.4h7.2M12 18.4v3"/><path d="M5.6 11.4h2.6l1.5-2.8 2.3 5.6 1.7-2.8h4.7"/></svg></span>
+            <div><div class="yr">2025</div><h4>IT Intern &mdash; Tanza Specialist Medical Center</h4><p>Manual test case execution, defect documentation and system quality assurance.</p></div></div>
+          <div class="tl-item"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.6 8.6 12 4.2l9.4 4.4L12 13z"/><path d="M6.4 10.4v4.8c0 1.8 2.5 3.2 5.6 3.2s5.6-1.4 5.6-3.2v-4.8"/><path d="M20.2 9.2v5"/></svg></span>
+            <div><div class="yr">2026</div><h4>BSIT graduate &mdash; Granby Colleges of Science and Technology</h4><p>Graduated alongside the Outstanding System Development Award for my capstone system.</p></div></div>
+          <div class="tl-item"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.4" width="18.8" height="15.2" rx="2"/><path d="M6.6 9.6 9.6 12l-3 2.4"/><path d="M12.4 14.8h4.8"/></svg></span>
+            <div><div class="yr">Now</div><h4>Junior PHP / Laravel Developer</h4><p>Building Laravel and .NET projects and looking for my first full-time developer role.</p></div></div>
+        </div>
+      </div>
+
+      <div class="card facts">
+        <div class="fact"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.6 8.6 12 4.2l9.4 4.4L12 13z"/><path d="M6.4 10.4v4.8c0 1.8 2.5 3.2 5.6 3.2s5.6-1.4 5.6-3.2v-4.8"/><path d="M20.2 9.2v5"/></svg></span>
+          <div><h4>Education</h4><span>BS Information Technology &mdash; Granby Colleges of Science and Technology, 2026</span></div></div>
+        <div class="fact"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="3.8"/><circle cx="12" cy="12" r="1" class="dotfill"/></svg></span>
+          <div><h4>Focus</h4><span>Laravel REST APIs, role-based systems, React + Vite front ends</span></div></div>
+        <div class="fact"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.6" cy="10.6" r="6.6"/><path d="M15.4 15.4 20.6 20.6"/><path d="M7.8 10.6 9.9 12.7l3.4-3.6"/></svg></span>
+          <div><h4>Also strong at</h4><span>Manual testing, test case execution, defect documentation, debugging</span></div></div>
+        <div class="fact"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.4s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.2" r="2.6"/></svg></span>
+          <div><h4>Location</h4><span>Tanza, Cavite, Philippines &mdash; open to remote work</span></div></div>
+        <div class="fact"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.4 2.8 12 7.8l5 1.6-5 1.6-1.6 5-1.6-5-5-1.6 5-1.6z"/><path d="M17.6 13.4l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z"/></svg></span>
+          <div><h4>Strengths</h4><span>Problem-solving, attention to detail, communication, team collaboration</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.4" width="18.8" height="15.2" rx="2"/><path d="M6.6 9.6 9.6 12l-3 2.4"/><path d="M12.4 14.8h4.8"/></svg> Skills</div>
+      <h2>Technical Skills</h2>
+      <div class="rule"></div>
+      <p>The stack I reach for, grouped by what it actually does.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="card">
+        <div class="skill-head"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 3.6c-2.4 0-1.2 6.4-3.8 8.4 2.6 2 1.4 8.4 3.8 8.4"/><path d="M14.4 3.6c2.4 0 1.2 6.4 3.8 8.4-2.6 2-1.4 8.4-3.8 8.4"/></svg></span><h3>Languages</h3><span class="n">08</span></div>
+        <div class="pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="10.4" ry="6.8"/><text x="12" y="15" font-size="8.6">php</text></svg><span>PHP</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="7.6">C#</text></svg><span>C#</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.6" font-size="8">JS</text></svg><span>JavaScript</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.4 3.6 5.9 19.7 12 21.4l6.1-1.7 1.5-16.1z"/><path d="M9.8 9.6 7.8 11.6l2 2"/><path d="M14.2 9.6l2 2-2 2"/></svg><span>HTML</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.4 3.6 5.9 19.7 12 21.4l6.1-1.7 1.5-16.1z"/><path d="M12 8.2c-1.9 2.4-3.2 4-3.2 5.4a3.2 3.2 0 0 0 6.4 0c0-1.4-1.3-3-3.2-5.4z"/></svg><span>CSS</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.8" y="4.2" width="18.4" height="15.6" rx="2"/><path d="M2.8 9h18.4"/><path d="M6.4 12.6h4M6.4 16.2h6.4"/><path d="M15.4 12.6h2.2M15.4 16.2h2.2"/></svg><span>SQL</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="6.8">C++</text></svg><span>C++</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 10.2h11.4v4.4a4.4 4.4 0 0 1-4.4 4.4H9.2a4.4 4.4 0 0 1-4.4-4.4z"/><path d="M16.2 11.6h1.6a2.4 2.4 0 0 1 0 4.8h-1.6"/><path d="M8.6 7.4c.9-1.1.9-2 0-3.1M12 7.4c.9-1.1.9-2 0-3.1"/></svg><span>Java</span></span></div>
+      </div>
+      <div class="card">
+        <div class="skill-head"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.8" y="4" width="18.4" height="6.4" rx="1.8"/><rect x="2.8" y="13.6" width="18.4" height="6.4" rx="1.8"/><path d="M6.4 7.2h.01M6.4 16.8h.01"/><path d="M16.8 7.2h2.2M16.8 16.8h2.2"/></svg></span><h3>Backend &amp; Frameworks</h3><span class="n">07</span></div>
+        <div class="pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 3.6h3.6v12.4h11.2l-3.6 4H4.6z"/><path d="M8.2 16v4"/></svg><span>Laravel</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="4.6" cy="12" r="2.2"/><circle cx="19.4" cy="12" r="2.2"/><path d="M6.8 12h2.4M14.8 12h2.4"/><path d="M13.4 5.6 9.6 12.4h3l-1 6 3.8-6.8h-3z"/></svg><span>Livewire</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.6 3.6h4a2 2 0 0 1 2 2v12.8a2 2 0 0 1-2 2h-4"/><path d="M3.4 12h11.2"/><path d="M11 8.4 14.6 12 11 15.6"/></svg><span>Laravel Breeze</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 6v5.4c0 4.4-3.2 7.4-8 9.8-4.8-2.4-8-5.4-8-9.8V6z"/><circle cx="12" cy="10.6" r="1.9"/><path d="M12 12.5v2.8"/><path d="M12 14.2h1.6"/></svg><span>Laravel Sanctum</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="12.6" y="6.2" width="8.8" height="11.6" rx="1.6"/><path d="M12.6 10h8.8M12.6 14h8.8"/><circle cx="5.2" cy="12" r="2.8"/><path d="M8 12h4.6"/></svg><span>Eloquent ORM</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="6.2">.NET</text></svg><span>ASP.NET Core</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="7.6">EF</text></svg><span>Entity Framework Core</span></span></div>
+      </div>
+      <div class="card">
+        <div class="skill-head"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.4" width="18.8" height="15.2" rx="2"/><path d="M2.6 9h18.8"/><path d="M5.7 6.7h.01M8.1 6.7h.01M10.5 6.7h.01"/><path d="M6.4 12.6h6.4M6.4 16h9.6"/></svg></span><h3>Frontend</h3><span class="n">07</span></div>
+        <div class="pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.1"/><ellipse cx="12" cy="12" rx="10" ry="4.1"/><ellipse cx="12" cy="12" rx="10" ry="4.1" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.1" transform="rotate(120 12 12)"/></svg><span>React</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 4.8 12 20.8l8.8-16"/><path d="M13.8 7.4 9.8 12.8h3.1l-1.1 4.2 4.4-5.6h-3.1z"/></svg><span>Vite</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.8" y="4.2" width="18.4" height="15.6" rx="2"/><path d="M2.8 8.6h18.4"/><path d="M8.6 12.2c-1.2 0-.6 2.2-2 2.8 1.4.6.8 2.8 2 2.8"/><path d="M15.4 12.2c1.2 0 .6 2.2 2 2.8-1.4.6-.8 2.8-2 2.8"/></svg><span>Blade</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.6 19.4 9.4 7.6l4 6.8"/><path d="M11.6 19.4 16.4 11l5 8.4z"/><path d="M2.6 19.4h18.8"/></svg><span>Alpine.js</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8 .9.2 1.6.9 2.3 1.7 1.2 1.2 2.6 2.7 5.5 2.7 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.7-1.2-1.2-2.6-2.7-5.5-2.7z" transform="translate(-3 0)"/><path d="M6 13.4c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.7 1.2 1.2 2.6 2.7 5.5 2.7 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.7-1.2-1.2-2.6-2.7-5.5-2.7z" transform="translate(3 -1.6)"/></svg><span>Tailwind CSS</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.6h14.4"/><path d="M14.2 5.4 17.8 8.6l-3.6 3.2"/><path d="M21 15.4H6.6"/><path d="M9.8 12.2 6.2 15.4l3.6 3.2"/></svg><span>Axios</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.4" y="4.6" width="13" height="9.6" rx="1.6"/><path d="M6.6 18.2h4.6M8.9 14.2v4"/><rect x="16.8" y="9.4" width="4.8" height="10.6" rx="1.4"/><path d="M18.6 18.4h1.2"/></svg><span>Responsive Web Design</span></span></div>
+      </div>
+      <div class="card">
+        <div class="skill-head"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.8" rx="7.4" ry="2.8"/><path d="M4.6 5.8v12.4c0 1.5 3.3 2.8 7.4 2.8s7.4-1.3 7.4-2.8V5.8"/><path d="M4.6 12c0 1.5 3.3 2.8 7.4 2.8s7.4-1.3 7.4-2.8"/></svg></span><h3>Databases</h3><span class="n">06</span></div>
+        <div class="pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="11" cy="6" rx="6.6" ry="2.6"/><path d="M4.4 6v7.6c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6V6"/><path d="M4.4 10.2c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6"/><path d="M13.6 21c3-.6 5.4-3 6-6-2.6.4-5 2.8-6 6z"/></svg><span>MySQL</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12.6" cy="5.8" rx="6.6" ry="2.6"/><path d="M6 5.8v7c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6v-7"/><path d="M6 9.8c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6"/><path d="M6 13.6c-2.2.9-3.4 2.6-3.4 4.4 0 1.6.9 2.6 2 2.6 1.4 0 2-1.4 2-3.2"/></svg><span>PostgreSQL</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 3.2c-3 3.4-5.4 7.6-6.6 12.2l-1.4 5.4c-2.6-2.4-4.4-5.2-5.2-8.2-1-3.8.6-7.2 4-8.6 2.8-1.2 6.2-1.2 9.2-.8z"/><path d="M11 15.4c1.6-4.4 3.8-8.2 6.6-11.4"/></svg><span>SQLite</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.8 2.6 4.2 12.8a.8.8 0 0 0 .6 1.3h6.4v7.3l8.6-10.2a.8.8 0 0 0-.6-1.3h-6.4z"/></svg><span>Supabase</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="7.4" cy="6.4" rx="4.6" ry="2.2"/><path d="M2.8 6.4v8.2c0 1.2 2.1 2.2 4.6 2.2.9 0 1.8-.14 2.5-.38"/><path d="M2.8 10.6c0 1.2 2.1 2.2 4.6 2.2"/><path d="M14.4 11.6 17 9l2.6 2.6"/><path d="M17 9v11"/></svg><span>Migrations &amp; Seeding</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="3.8" width="7.8" height="6.6" rx="1.2"/><path d="M2.6 6.4h7.8"/><rect x="13.6" y="13.6" width="7.8" height="6.6" rx="1.2"/><path d="M13.6 16.2h7.8"/><path d="M6.5 10.4v4.4h4"/><path d="M10.5 14.8 13.6 13.4M10.5 14.8l3.1 1.4"/></svg><span>Relational Database Design</span></span></div>
+      </div>
+      <div class="card">
+        <div class="skill-head"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 2.8v6.4l-5 8.2a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3l-5-8.2V2.8"/><path d="M8.4 2.8h7.2"/><path d="M6.6 15.2h10.8"/></svg></span><h3>Testing</h3><span class="n">06</span></div>
+        <div class="pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 2.8v6.4l-5 8.2a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3l-5-8.2V2.8"/><path d="M8.4 2.8h7.2"/><path d="M9 16.4l2 2 4-4.2"/></svg><span>PHPUnit</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 2.8v6.4l-5 8.2a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3l-5-8.2V2.8"/><path d="M8.4 2.8h7.2"/><path d="M10 14.6l4 4.2M14 14.6l-4 4.2"/></svg><span>xUnit</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4.2" width="14" height="16.4" rx="1.8"/><path d="M9 4.2V3.2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M8.6 10.4l1.6 1.6 3.2-3.2"/><path d="M8.6 15.8l1.6 1.6 3.2-3.2"/></svg><span>Manual Testing</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.8" y="4.2" width="18.4" height="15.6" rx="2"/><path d="M2.8 8.6h18.4"/><path d="M10.2 11.6l4.4 2.6-4.4 2.6z"/><path d="M5.6 6.4h.01"/></svg><span>Test Case Execution</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 4a.8.8 0 0 1 .8-.8h7.2L18.4 7.8V20a.8.8 0 0 1-.8.8H6.4a.8.8 0 0 1-.8-.8z"/><path d="M13.4 3.4v4.6h4.8"/><rect x="9.4" y="12.4" width="5.2" height="6" rx="2.6"/><path d="M9.4 14.4H7.8M14.6 14.4h1.6M9.4 17h-1.6M14.6 17h1.6"/></svg><span>Defect Documentation</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.4" y="7.8" width="7.2" height="10" rx="3.6"/><path d="M8.4 11.2H4.8M15.6 11.2h3.6M8.4 15.2H5.6M15.6 15.2h2.8"/><path d="M9.8 8.2 8.4 6.2M14.2 8.2l1.4-2"/></svg><span>Debugging</span></span></div>
+      </div>
+      <div class="card">
+        <div class="skill-head"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.4" width="18.8" height="15.2" rx="2"/><path d="M6.6 9.6 9.6 12l-3 2.4"/><path d="M12.4 14.8h4.8"/></svg></span><h3>Tools &amp; DevOps</h3><span class="n">10</span></div>
+        <div class="pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.4" cy="5.4" r="2.3"/><circle cx="6.4" cy="18.6" r="2.3"/><circle cx="17.6" cy="8.6" r="2.3"/><path d="M6.4 7.7v8.6"/><path d="M17.6 10.9c0 3.8-3.2 5.6-7 6"/></svg><span>Git</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.8A1.8 1.8 0 0 1 6.8 3H19v14.2H6.8A1.8 1.8 0 0 0 5 19z"/><path d="M5 19a1.8 1.8 0 0 0 1.8 1.8H19v-3.6"/><path d="M8.6 7.2h6.8M8.6 10.4h4.4"/></svg><span>GitHub</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.4" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="8.5" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="12.6" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="8.5" y="6.6" width="3.3" height="3.3" rx=".5"/><path d="M2.4 15.4h17.4a3.9 3.9 0 0 1-3.9 3.8H7.9a5.5 5.5 0 0 1-5.5-3.8z"/><path d="M19.4 12.6c.9-.7 1.7-.5 2.2.3"/></svg><span>Docker</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18.4a4.4 4.4 0 0 1-.4-8.8 5.8 5.8 0 0 1 11.2 1.4 3.7 3.7 0 0 1-.4 7.4"/><path d="M12 20.6v-7.4"/><path d="M9.4 15.8 12 13.2l2.6 2.6"/></svg><span>Render</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20.4 7v10L12 21.2 3.6 17V7z"/><path d="M3.6 7 12 11.2 20.4 7"/><path d="M12 11.2v10"/><path d="M7.8 4.9 16.2 9.1"/></svg><span>Composer</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.4" y="6.6" width="19.2" height="10.8" rx="2"/><text x="12" y="15.2" font-size="6.6">npm</text></svg><span>npm</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 3 10.6l7.4 3.2L21 3z"/><path d="M21 3 13.4 21l-3-7.2L21 3z"/><path d="M10.4 13.8 9.2 20l3.2-3.4"/></svg><span>Postman</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 4a.8.8 0 0 1 .8-.8h7.2L18.4 7.8V20a.8.8 0 0 1-.8.8H6.4a.8.8 0 0 1-.8-.8z"/><path d="M13.4 3.4v4.6h4.8"/><path d="M10.4 12.4c-1.4 0-.7 2.6-2.2 3.4 1.5.8.8 3.4 2.2 3.4"/><path d="M13.6 12.4c1.4 0 .7 2.6 2.2 3.4-1.5.8-.8 3.4-2.2 3.4"/></svg><span>Swagger / OpenAPI</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.4 2.8 21 4.6v14.8l-3.6 1.8-8.8-8.2-4.4 3.4L3 15.2V8.8l1.2-1.2 4.4 3.4z"/><path d="M17.4 6.2v11.6L9.2 12z"/></svg><span>VS Code</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="4.2"/><path d="M8.4 8.4 15.6 15.6M15.6 8.4 8.4 15.6"/></svg><span>XAMPP</span></span></div>
+      </div>
+      <div class="card">
+        <div class="skill-head"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="3.8"/><circle cx="12" cy="12" r="1" class="dotfill"/></svg></span><h3>Concepts</h3><span class="n">06</span></div>
+        <div class="pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.4"/><path d="M2.6 12h5.2M16.2 12h5.2"/><path d="M6 9.4 8.6 12 6 14.6"/><path d="M18 9.4 20.6 12 18 14.6"/></svg><span>REST API Design</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 6v5.4c0 4.4-3.2 7.4-8 9.8-4.8-2.4-8-5.4-8-9.8V6z"/><circle cx="12" cy="10.6" r="1.9"/><path d="M12 12.5v2.8"/><path d="M12 14.2h1.6"/></svg><span>Session / Cookie Auth</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 6v5.4c0 4.4-3.2 7.4-8 9.8-4.8-2.4-8-5.4-8-9.8V6z"/><circle cx="12" cy="10.2" r="2.2"/><path d="M8.4 16.4c.8-1.6 2.1-2.4 3.6-2.4s2.8.8 3.6 2.4"/></svg><span>Role-Based Authorization</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 4a.8.8 0 0 1 .8-.8h7.2L18.4 7.8V20a.8.8 0 0 1-.8.8H6.4a.8.8 0 0 1-.8-.8z"/><path d="M13.4 3.4v4.6h4.8"/><path d="M8.4 14.4l2.2 2.2 4.2-4.4"/></svg><span>Form Request Validation</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 4a.8.8 0 0 1 .8-.8h7.2L18.4 7.8V20a.8.8 0 0 1-.8.8H6.4a.8.8 0 0 1-.8-.8z"/><path d="M13.4 3.4v4.6h4.8"/><path d="M12 11.4v6.2"/><path d="M9.4 15 12 17.6 14.6 15"/></svg><span>PDF Generation</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9.6a6 6 0 1 0-12 0c0 5-2.2 6.4-2.2 6.4h16.4S18 14.6 18 9.6z"/><path d="M13.7 19.6a2 2 0 0 1-3.4 0"/></svg><span>Queued Notifications</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20.4 7v10L12 21.2 3.6 17V7z"/><path d="M3.6 7 12 11.2 20.4 7"/><path d="M12 11.2v10"/><path d="M7.8 4.9 16.2 9.1"/></svg> Work</div>
+      <h2>Featured Projects</h2>
+      <div class="rule"></div>
+      <p>Three systems I built end to end &mdash; an award-winning Laravel platform, a deployed full-stack portfolio, and a C#/.NET API.</p>
+    </div>
+
+    <div class="proj-grid">
+      <article class="card proj feature">
+        <div class="proj-top"><span class="tile md"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="15.8" rx="2"/><path d="M3 9.8h18M8 3.2v3.4M16 3.2v3.4"/><path d="M7 13h3.2M13.8 13H17M7 16.8h3.2M13.8 16.8H17"/></svg></span><span class="tag"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.6h9.6v4.8a4.8 4.8 0 0 1-9.6 0z"/><path d="M7.2 5.2H4.8a2.4 2.4 0 0 0 2.6 3.6M16.8 5.2h2.4a2.4 2.4 0 0 1-2.6 3.6"/><path d="M12 13.2v3.4"/><path d="M8.4 20.4h7.2l-.9-3.8H9.3z"/></svg>Award-winning</span></div>
+        <h3>Student Subject Scheduling and Faculty Loading System</h3>
+        <div class="stack pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="10.4" ry="6.8"/><text x="12" y="15" font-size="8.6">php</text></svg><span>PHP 8.2</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 3.6h3.6v12.4h11.2l-3.6 4H4.6z"/><path d="M8.2 16v4"/></svg><span>Laravel 12</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="4.6" cy="12" r="2.2"/><circle cx="19.4" cy="12" r="2.2"/><path d="M6.8 12h2.4M14.8 12h2.4"/><path d="M13.4 5.6 9.6 12.4h3l-1 6 3.8-6.8h-3z"/></svg><span>Livewire 3</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.6 3.6h4a2 2 0 0 1 2 2v12.8a2 2 0 0 1-2 2h-4"/><path d="M3.4 12h11.2"/><path d="M11 8.4 14.6 12 11 15.6"/></svg><span>Breeze</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 6v5.4c0 4.4-3.2 7.4-8 9.8-4.8-2.4-8-5.4-8-9.8V6z"/><circle cx="12" cy="10.2" r="2.2"/><path d="M8.4 16.4c.8-1.6 2.1-2.4 3.6-2.4s2.8.8 3.6 2.4"/></svg><span>Spatie Permission</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="11" cy="6" rx="6.6" ry="2.6"/><path d="M4.4 6v7.6c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6V6"/><path d="M4.4 10.2c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6"/><path d="M13.6 21c3-.6 5.4-3 6-6-2.6.4-5 2.8-6 6z"/></svg><span>MySQL 8</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.8" y="4.2" width="18.4" height="15.6" rx="2"/><path d="M2.8 8.6h18.4"/><path d="M8.6 12.2c-1.2 0-.6 2.2-2 2.8 1.4.6.8 2.8 2 2.8"/><path d="M15.4 12.2c1.2 0 .6 2.2 2 2.8-1.4.6-.8 2.8-2 2.8"/></svg><span>Blade</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8 .9.2 1.6.9 2.3 1.7 1.2 1.2 2.6 2.7 5.5 2.7 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.7-1.2-1.2-2.6-2.7-5.5-2.7z" transform="translate(-3 0)"/><path d="M6 13.4c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.9.2 1.6.9 2.3 1.7 1.2 1.2 2.6 2.7 5.5 2.7 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.9-.2-1.6-.9-2.3-1.7-1.2-1.2-2.6-2.7-5.5-2.7z" transform="translate(3 -1.6)"/></svg><span>Tailwind</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.6 19.4 9.4 7.6l4 6.8"/><path d="M11.6 19.4 16.4 11l5 8.4z"/><path d="M2.6 19.4h18.8"/></svg><span>Alpine.js</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 4a.8.8 0 0 1 .8-.8h7.2L18.4 7.8V20a.8.8 0 0 1-.8.8H6.4a.8.8 0 0 1-.8-.8z"/><path d="M13.4 3.4v4.6h4.8"/><path d="M12 11.4v6.2"/><path d="M9.4 15 12 17.6 14.6 15"/></svg><span>DomPDF</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 4.8 12 20.8l8.8-16"/><path d="M13.8 7.4 9.8 12.8h3.1l-1.1 4.2 4.4-5.6h-3.1z"/></svg><span>Vite 7</span></span></div>
+        <ul><li>A capstone academic platform for Granby Colleges of Science and Technology covering the full lifecycle &mdash; from account registration to graded, finalised class schedules &mdash; across four roles: Super Admin, Program Admin, Teacher and Student.</li><li>The scheduling engine builds conflict-free schedules automatically, then re-validates everything inside a database transaction before it commits, replacing old meeting records only once the new schedule passes.</li><li>Winner of the Outstanding System Development Award, AY 2025&ndash;2026, and presented at the institution&rsquo;s thesis symposium.</li></ul>
+        <details class="mods">
+          <summary>
+            <span class="sum-label"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.6" y="6.6" width="10.8" height="10.8" rx="2.2"/><rect x="9.9" y="9.9" width="4.2" height="4.2" rx="1"/><path d="M9.6 3.4v3.2M14.4 3.4v3.2M9.6 17.4v3.2M14.4 17.4v3.2M3.4 9.6h3.2M3.4 14.4h3.2M17.4 9.6h3.2M17.4 14.4h3.2"/></svg> 10 modules &middot; 11 scheduling safeguards</span>
+            <span class="chev"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 9.2 12 15.6l6.4-6.4"/></svg></span>
+          </summary>
+          <div class="mod-grid"><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.6 3.6h4a2 2 0 0 1 2 2v12.8a2 2 0 0 1-2 2h-4"/><path d="M3.4 12h11.2"/><path d="M11 8.4 14.6 12 11 15.6"/></svg></span><div><h4>Authentication &amp; Account Approval</h4><p>Registration with academic data and up to 10 private PDF uploads; pending / active / inactive / declined states with reviewer notes and full approval history; email notifications on decisions; automatic academic-record creation and placement into the least-filled eligible section on approval.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.8A1.8 1.8 0 0 1 6.8 3H19v14.2H6.8A1.8 1.8 0 0 0 5 19z"/><path d="M5 19a1.8 1.8 0 0 0 1.8 1.8H19v-3.6"/><path d="M8.6 7.2h6.8M8.6 10.4h4.4"/></svg></span><div><h4>Programs, Subjects &amp; Curriculum</h4><p>Programs with configurable duration and term count. Curricula versioned by effective date and organised by year level, term and sequence &mdash; required, elective, major, minor, general, thesis and internship subjects with units, prerequisites and minimum grades.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.4" r="3.2"/><path d="M3.2 19.4c0-3.2 2.6-5.4 5.8-5.4s5.8 2.2 5.8 5.4"/><path d="M16.2 5.6a3.2 3.2 0 0 1 0 5.8"/><path d="M17.6 14.6c2 .7 3.2 2.4 3.2 4.8"/></svg></span><div><h4>Section Management</h4><p>Sections scoped to a program and curriculum with capacity and status; student transfer between compatible sections; term promotion blocked while offerings are still open; archive and restore limited to empty or fully-graduated sections.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2.2"/></svg></span><div><h4>Faculty Availability &amp; Load</h4><p>Day and time availability per teacher, regular (36-unit) versus part-time (20-unit) load ceilings enforced automatically, three-tier subject preference ranking, and program-scoped permissions for Program Admins.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.6" y="6.6" width="10.8" height="10.8" rx="2.2"/><rect x="9.9" y="9.9" width="4.2" height="4.2" rx="1"/><path d="M9.6 3.4v3.2M14.4 3.4v3.2M9.6 17.4v3.2M14.4 17.4v3.2M3.4 9.6h3.2M3.4 14.4h3.2M17.4 9.6h3.2M17.4 14.4h3.2"/></svg></span><div><h4>Schedule Generation Engine</h4><p>Given a section, evaluates every required subject in its curriculum term and builds a conflict-free schedule. Cross-checks subject duration, teacher preference and program, availability windows, current load against the ceiling, existing teacher / room / section conflicts, room availability, and other rows in the same unsaved draft. Prefers ranked teachers, falls back to same-program teachers, and flags incomplete rows for manual review.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="15.8" rx="2"/><path d="M3 9.8h18M8 3.2v3.4M16 3.2v3.4"/><path d="M7 13h3.2M13.8 13H17M7 16.8h3.2M13.8 16.8H17"/></svg></span><div><h4>Class Offering Management</h4><p>Manual create, edit and reschedule with live teacher and room availability lookups; archive, cancel, unlock and reactivate depending on offering state; per-section and consolidated PDF export.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9.6" cy="8" r="3.4"/><path d="M3.4 19.6c0-3.4 2.8-5.8 6.2-5.8 1 0 1.9.2 2.8.6"/><path d="M14.2 17.4l2.2 2.2 4.2-4.6"/></svg></span><div><h4>Enrollment &amp; Curriculum Tracking</h4><p>Curriculum-driven subject initialisation with custom subjects for irregular and transfer students; per-subject status (not taken / enrolled / passed / failed / credited); duplicate-enrollment, prerequisite and schedule-overlap enforcement; enrollment history and change notifications.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.8" y="3.8" width="18.4" height="12.4" rx="2"/><path d="M12 16.2V20"/><path d="M8.6 20h6.8"/><path d="M6.6 12.4V9M10.2 12.4V7M13.8 12.4v-2.6M17.4 12.4V7.6"/></svg></span><div><h4>Teacher Portal</h4><p>Today's classes, next class, weekly teaching time and pending evaluations; weekly and monthly load summaries, class rosters, grade entry with a finalisation lock, and A4 PDF schedule export.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.4" width="18.8" height="15.2" rx="2"/><path d="M2.6 9h18.8"/><path d="M5.7 6.7h.01M8.1 6.7h.01M10.5 6.7h.01"/><path d="M6.4 12.6h6.4M6.4 16h9.6"/></svg></span><div><h4>Student Portal</h4><p>Section schedule merged with additional enrolled classes, curriculum progress view, schedule history and A4 PDF export.</p></div></div><div class="mod"><span class="tile sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 3.6v14.8a2 2 0 0 0 2 2h15.2"/><path d="M8 16.4V11M12 16.4V6.6M16 16.4v-3.4M20 16.4V9"/></svg></span><div><h4>Dashboards &amp; Reporting</h4><p>Role-scoped counts &mdash; students by status, pending approvals, active teachers, sections and rooms, enrollment by program, yearly trends &mdash; plus printable section, teacher, student and consolidated reports.</p></div></div></div>
+          <div class="guard-wrap">
+            <div class="guard-title">Checks the engine runs before a row is allowed to save</div>
+            <div class="guards"><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Teacher conflict</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Room conflict</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Section conflict</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Student conflict</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Faculty-load ceiling</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Availability window</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Preferred-subject priority</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Program boundary</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Transactional revalidation</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Curriculum validation</span><span class="guard"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg>Prerequisite validation</span></div>
+          </div>
+        </details>
+        <div class="links"><a href="https://github.com/nickos8/Faculty-Loading-System" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.8A1.8 1.8 0 0 1 6.8 3H19v14.2H6.8A1.8 1.8 0 0 0 5 19z"/><path d="M5 19a1.8 1.8 0 0 0 1.8 1.8H19v-3.6"/><path d="M8.6 7.2h6.8M8.6 10.4h4.4"/></svg>github.com/nickos8/Faculty-Loading-System</a></div>
+      </article>
+      <article class="card proj">
+        <div class="proj-top"><span class="tile md"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.4" width="18.8" height="15.2" rx="2"/><path d="M10 4.4v15.2"/><path d="M5 9h2.6M5 12.4h2.6M5 15.8h1.6"/><path d="M13.6 9.8 16.2 12l-2.6 2.2"/><path d="M17.4 14.4h1.8"/></svg></span><span class="tag"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18.4a4.4 4.4 0 0 1-.4-8.8 5.8 5.8 0 0 1 11.2 1.4 3.7 3.7 0 0 1-.4 7.4"/><path d="M12 20.6v-7.4"/><path d="M9.4 15.8 12 13.2l2.6 2.6"/></svg>Deployed</span></div>
+        <h3>Full-Stack Developer Portfolio</h3>
+        <div class="stack pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.6 3.6h3.6v12.4h11.2l-3.6 4H4.6z"/><path d="M8.2 16v4"/></svg><span>Laravel 13</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.1"/><ellipse cx="12" cy="12" rx="10" ry="4.1"/><ellipse cx="12" cy="12" rx="10" ry="4.1" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.1" transform="rotate(120 12 12)"/></svg><span>React 19</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 4.8 12 20.8l8.8-16"/><path d="M13.8 7.4 9.8 12.8h3.1l-1.1 4.2 4.4-5.6h-3.1z"/></svg><span>Vite</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 6v5.4c0 4.4-3.2 7.4-8 9.8-4.8-2.4-8-5.4-8-9.8V6z"/><circle cx="12" cy="10.6" r="1.9"/><path d="M12 12.5v2.8"/><path d="M12 14.2h1.6"/></svg><span>Sanctum</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12.6" cy="5.8" rx="6.6" ry="2.6"/><path d="M6 5.8v7c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6v-7"/><path d="M6 9.8c0 1.4 3 2.6 6.6 2.6s6.6-1.2 6.6-2.6"/><path d="M6 13.6c-2.2.9-3.4 2.6-3.4 4.4 0 1.6.9 2.6 2 2.6 1.4 0 2-1.4 2-3.2"/></svg><span>PostgreSQL</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.8 2.6 4.2 12.8a.8.8 0 0 0 .6 1.3h6.4v7.3l8.6-10.2a.8.8 0 0 0-.6-1.3h-6.4z"/></svg><span>Supabase</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.4" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="8.5" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="12.6" y="10.6" width="3.3" height="3.3" rx=".5"/><rect x="8.5" y="6.6" width="3.3" height="3.3" rx=".5"/><path d="M2.4 15.4h17.4a3.9 3.9 0 0 1-3.9 3.8H7.9a5.5 5.5 0 0 1-5.5-3.8z"/><path d="M19.4 12.6c.9-.7 1.7-.5 2.2.3"/></svg><span>Docker</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18.4a4.4 4.4 0 0 1-.4-8.8 5.8 5.8 0 0 1 11.2 1.4 3.7 3.7 0 0 1-.4 7.4"/><path d="M12 20.6v-7.4"/><path d="M9.4 15.8 12 13.2l2.6 2.6"/></svg><span>Render</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.6h14.4"/><path d="M14.2 5.4 17.8 8.6l-3.6 3.2"/><path d="M21 15.4H6.6"/><path d="M9.8 12.2 6.2 15.4l3.6 3.2"/></svg><span>Axios</span></span></div>
+        <ul><li>A React 19 + Vite front end on a Laravel 13 REST API, with a Sanctum-authenticated admin dashboard for editing projects and profile content without touching code.</li><li>Public <code>GET /api/projects</code> serves published, ordered projects; create, update and delete sit behind <code>auth:sanctum</code>. SPA auth uses Sanctum&rsquo;s stateful session cookies rather than bearer tokens, with CSRF protection and session regeneration on login.</li><li>Supabase-hosted PostgreSQL through the session pooler over SSL; admin credentials seeded from environment config, never from source control.</li><li>Shipped as a single Docker image on Render, serving the built React app and the API from one origin so the cookie auth never hits cross-site restrictions. Backend feature tests run on an isolated in-memory SQLite database.</li></ul>
+        <div class="links"><a href="https://github.com/nickos8/developer-portfolio-deploy" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.8A1.8 1.8 0 0 1 6.8 3H19v14.2H6.8A1.8 1.8 0 0 0 5 19z"/><path d="M5 19a1.8 1.8 0 0 0 1.8 1.8H19v-3.6"/><path d="M8.6 7.2h6.8M8.6 10.4h4.4"/></svg>github.com/nickos8/developer-portfolio-deploy</a></div>
+      </article>
+      <article class="card proj">
+        <div class="proj-top"><span class="tile md"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="6.2">.NET</text></svg></span><span class="tag"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.4"/><path d="M2.6 12h5.2M16.2 12h5.2"/><path d="M6 9.4 8.6 12 6 14.6"/><path d="M18 9.4 20.6 12 18 14.6"/></svg>Backend API</span></div>
+        <h3>Restaurant Order API</h3>
+        <div class="stack pills"><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="7.6">C#</text></svg><span>C#</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="6.2">.NET</text></svg><span>.NET 8</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="6.2">.NET</text></svg><span>ASP.NET Core</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.4"/><text x="12" y="15.4" font-size="7.6">EF</text></svg><span>EF Core</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 3.2c-3 3.4-5.4 7.6-6.6 12.2l-1.4 5.4c-2.6-2.4-4.4-5.2-5.2-8.2-1-3.8.6-7.2 4-8.6 2.8-1.2 6.2-1.2 9.2-.8z"/><path d="M11 15.4c1.6-4.4 3.8-8.2 6.6-11.4"/></svg><span>SQLite</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 2.8v6.4l-5 8.2a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3l-5-8.2V2.8"/><path d="M8.4 2.8h7.2"/><path d="M10 14.6l4 4.2M14 14.6l-4 4.2"/></svg><span>xUnit</span></span><span class="pill"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 4a.8.8 0 0 1 .8-.8h7.2L18.4 7.8V20a.8.8 0 0 1-.8.8H6.4a.8.8 0 0 1-.8-.8z"/><path d="M13.4 3.4v4.6h4.8"/><path d="M10.4 12.4c-1.4 0-.7 2.6-2.2 3.4 1.5.8.8 3.4 2.2 3.4"/><path d="M13.6 12.4c1.4 0 .7 2.6 2.2 3.4-1.5.8-.8 3.4-2.2 3.4"/></svg><span>Swagger</span></span></div>
+        <ul><li>A REST API for a restaurant&rsquo;s full order lifecycle &mdash; menu, cart, checkout and receipts &mdash; written to keep a C#/.NET track alongside the Laravel work.</li><li>Order lines snapshot the menu price at the moment they are added, so a later price change can never rewrite a placed order&rsquo;s total. Deleting a referenced menu item retires it instead of hard-deleting, keeping historical orders intact.</li><li>An order can be paid exactly once, recording method and timestamp; paid orders become immutable.</li><li>EF Core migrations apply on startup with seed data, Swagger UI in development, and an xUnit suite covering order-total maths and the cart / pay / receipt rules using EF Core InMemory.</li></ul>
+        <div class="links"><a href="https://github.com/nickos8/restaurant-order-api" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.8A1.8 1.8 0 0 1 6.8 3H19v14.2H6.8A1.8 1.8 0 0 0 5 19z"/><path d="M5 19a1.8 1.8 0 0 0 1.8 1.8H19v-3.6"/><path d="M8.6 7.2h6.8M8.6 10.4h4.4"/></svg>github.com/nickos8/restaurant-order-api</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="certificates">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.6" y="6.6" width="10.8" height="10.8" rx="2.2"/><rect x="9.9" y="9.9" width="4.2" height="4.2" rx="1"/><path d="M9.6 3.4v3.2M14.4 3.4v3.2M9.6 17.4v3.2M14.4 17.4v3.2M3.4 9.6h3.2M3.4 14.4h3.2M17.4 9.6h3.2M17.4 14.4h3.2"/></svg> Learning</div>
+      <h2>Certifications &amp; Seminars</h2>
+      <div class="rule"></div>
+      <p>Where I've been keeping my skills current.</p>
+    </div>
+
+    <div class="list-grid">
+      <div class="card item"><span class="tile md"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.6" y="6.6" width="10.8" height="10.8" rx="2.2"/><rect x="9.9" y="9.9" width="4.2" height="4.2" rx="1"/><path d="M9.6 3.4v3.2M14.4 3.4v3.2M9.6 17.4v3.2M14.4 17.4v3.2M3.4 9.6h3.2M3.4 14.4h3.2M17.4 9.6h3.2M17.4 14.4h3.2"/></svg></span>
+        <div><h3>Building the Future with AI</h3><p>Data Analytics and AI Application Development Using Firebase &mdash; Seminar-Workshop Participant.</p><span class="yr">2026</span></div></div>
+      <div class="card item"><span class="tile md"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.8" r="2.3"/><circle cx="4.9" cy="17.4" r="2.3"/><circle cx="19.1" cy="17.4" r="2.3"/><path d="M10.4 6.7 6.5 15.4M13.6 6.7l3.9 8.7M7.2 17.4h9.6"/></svg></span>
+        <div><h3>Next-Gen Automation</h3><p>Blockchain, Networking, and Robotics &mdash; Seminar Participant.</p><span class="yr">2025</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="awards">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.6h9.6v4.8a4.8 4.8 0 0 1-9.6 0z"/><path d="M7.2 5.2H4.8a2.4 2.4 0 0 0 2.6 3.6M16.8 5.2h2.4a2.4 2.4 0 0 1-2.6 3.6"/><path d="M12 13.2v3.4"/><path d="M8.4 20.4h7.2l-.9-3.8H9.3z"/></svg> Recognition</div>
+      <h2>Awards &amp; Recognition</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="list-grid">
+      <div class="card item"><span class="tile md"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.6h9.6v4.8a4.8 4.8 0 0 1-9.6 0z"/><path d="M7.2 5.2H4.8a2.4 2.4 0 0 0 2.6 3.6M16.8 5.2h2.4a2.4 2.4 0 0 1-2.6 3.6"/><path d="M12 13.2v3.4"/><path d="M8.4 20.4h7.2l-.9-3.8H9.3z"/></svg></span>
+        <div><h3>Outstanding System Development Award</h3><p>For the Student Subject Scheduling and Faculty Loading System (Laravel / PHP / MySQL).</p><span class="yr">2026</span></div></div>
+      <div class="card item"><span class="tile md"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9.4" y="2.6" width="5.2" height="10.6" rx="2.6"/><path d="M5.8 11.4a6.2 6.2 0 0 0 12.4 0"/><path d="M12 17.6v3.2M8.8 20.8h6.4"/></svg></span>
+        <div><h3>Thesis Project Symposium Presenter</h3><p>Granby Colleges of Science and Technology &mdash; presented capstone system design and results.</p><span class="yr">2026</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="2.2"/><path d="m3.8 7 8.2 5.8L20.2 7"/></svg> Contact</div>
+      <h2>Let's Work Together</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="card contact-card">
+      <h3>Looking for a junior developer who sweats the details?</h3>
+      <p>I'm open to junior PHP/Laravel, full-stack and QA-leaning roles &mdash; remote or on-site. The fastest way to reach me is email.</p>
+
+      <div class="socials">
+        <span class="chip">
+          <a href="mailto:nickosarmijo4@gmail.com"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="5" width="18.8" height="14" rx="2.2"/><path d="m3.8 7 8.2 5.8L20.2 7"/></svg> nickosarmijo4@gmail.com</a>
+          <button class="copy" type="button" data-copy="nickosarmijo4@gmail.com" aria-label="Copy email address"><svg class="ico ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.6" y="8.6" width="11.4" height="11.4" rx="2"/><path d="M15.4 8.6V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.4a2 2 0 0 0 2 2h2.6"/></svg><svg class="ico ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg></button>
+        </span>
+        <a class="social" href="https://github.com/nickos8" target="_blank" rel="noopener"><svg class="ico ico-solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.12 3.04.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.15v3.19c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg> GitHub</a>
+        <a class="social" href="https://linkedin.com/in/nickos-armijo-08a643408" target="_blank" rel="noopener"><svg class="ico ico-solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9z"/></svg> LinkedIn</a>
+        <span class="chip">
+          <a href="tel:+639924702285"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 3.6 10.6 8l-2 2a13.4 13.4 0 0 0 5.4 5.4l2-2 4.4 2.2v3.2a1.6 1.6 0 0 1-1.8 1.6C10.7 19.6 4.4 13.3 3.4 5.4A1.6 1.6 0 0 1 5 3.6z"/></svg> +63 992 470 2285</a>
+          <button class="copy" type="button" data-copy="+63 992 470 2285" aria-label="Copy phone number"><svg class="ico ico-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.6" y="8.6" width="11.4" height="11.4" rx="2"/><path d="M15.4 8.6V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.4a2 2 0 0 0 2 2h2.6"/></svg><svg class="ico ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 12.4 9.4 17 19.2 7.2"/></svg></button>
+        </span>
+      </div>
+
+      <div class="loc"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.4s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.2" r="2.6"/></svg> Tanza, Cavite, Philippines &mdash; available for remote roles across time zones.</div>
+    </div>
+  </div>
+</section>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="M6.4 10.6 12 5l5.6 5.6"/></svg></button>
+
+<footer>
+  <div class="wrap foot">
+    <span>&copy; <span id="yr">2026</span> Nickos C. Armijo</span>
+    <span class="built">handwritten HTML &middot; CSS &middot; JavaScript</span>
+    <span class="built">Tanza, Cavite &middot; PH</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  var cue   = document.getElementById('cue');
+  var toTop = document.getElementById('toTop');
+
+  var burger = document.getElementById('burger');
+  var links  = document.getElementById('navlinks');
+  burger.addEventListener('click', function () {
+    var open = links.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.innerHTML = open ? '&times;' : '&#9776;';
+  });
+  links.addEventListener('click', function (e) {
+    if (e.target.closest('a')) {
+      links.classList.remove('open');
+      burger.innerHTML = '&#9776;';
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  var nav  = document.getElementById('top-nav');
+  var prog = document.getElementById('prog');
+  function onScroll() {
+    nav.classList.toggle('scrolled', window.scrollY > 12);
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    cue.classList.toggle('gone', window.scrollY > 60);
+    toTop.classList.toggle('show', window.scrollY > 700);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // pointer: card spotlight + ambient glow drift (fine pointers only)
+  var fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var calm = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (fine && !calm) {
+    var pending = null;
+    document.addEventListener('pointermove', function (e) {
+      if (pending) return;
+      pending = requestAnimationFrame(function () {
+        pending = null;
+        var card = e.target.closest ? e.target.closest('.card') : null;
+        if (card) {
+          var r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        }
+        var dx = (e.clientX / window.innerWidth - 0.5) * 42;
+        var dy = (e.clientY / window.innerHeight - 0.5) * 30;
+        document.body.style.setProperty('--gx', dx.toFixed(1) + 'px');
+        document.body.style.setProperty('--gy', dy.toFixed(1) + 'px');
+      });
+    }, { passive: true });
+  }
+
+  // copy to clipboard
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var done = function () {
+        btn.classList.add('done');
+        setTimeout(function () { btn.classList.remove('done'); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var t = document.createElement('textarea');
+        t.value = text; t.setAttribute('readonly', '');
+        t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); } catch (err) {}
+        document.body.removeChild(t);
+        done();
+      }
+    });
+  });
+
+  var navA = document.querySelectorAll('.nav-links a');
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        navA.forEach(function (a) {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('section[id], main[id]').forEach(function (s) { spy.observe(s); });
+</script>
+
+</body>
+</html>
