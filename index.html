@@ -227,6 +227,8 @@
   .tl-item p{margin:0;font-size:14px;color:var(--muted)}
 
   .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;align-items:start}
+  /* 8 cards in a 3-up grid leaves the last row 2-wide; stretch the final card to close the gap */
+  @media(min-width:946px){.skills-grid .card:last-child{grid-column:span 2}}
   .skill-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
   .skill-head h3{font-size:15.5px;font-weight:650}
   .skill-head .n{
