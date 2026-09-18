@@ -226,15 +226,20 @@
   .tl-item h4{margin:2px 0 4px;font-size:15.5px;font-weight:650}
   .tl-item p{margin:0;font-size:14px;color:var(--muted)}
 
-  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;align-items:start}
-  /* 8 cards in a 3-up grid leaves the last row 2-wide; stretch the final card to close the gap */
-  @media(min-width:946px){.skills-grid .card:last-child{grid-column:span 2}}
+  /* 8 categories: 1 col mobile / 2 cols tablet / 4 cols desktop divides evenly, so no
+     row is ever left with an empty slot and row/column gaps can share one value */
+  .skills-grid{display:grid;grid-template-columns:1fr;gap:20px;align-items:stretch}
+  @media(min-width:660px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1180px){.skills-grid{grid-template-columns:repeat(4,1fr)}}
+  .skills-grid .card{display:flex;flex-direction:column}
   .skill-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-  .skill-head h3{font-size:15.5px;font-weight:650}
+  .skill-head h3{font-size:15.5px;font-weight:650;line-height:1}
   .skill-head .n{
     margin-left:auto;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--muted);
+    font-variant-numeric:tabular-nums;line-height:1;
   }
   .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .skills-grid .pills{flex:1;align-content:flex-start}
   .pill{
     display:inline-flex;align-items:center;gap:7px;
     font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;padding:6px 11px;border-radius:9px;
@@ -244,6 +249,13 @@
   .pill .ico{font-size:15px;color:var(--accent-2);opacity:.85;transition:opacity .2s}
   .pill:hover{color:var(--text);border-color:var(--border-hi);background:rgba(45,212,191,.07)}
   .pill:hover .ico{opacity:1}
+  /* skills chips: one fixed rhythm so single-line chips share a height and two-line
+     chips grow symmetrically, icon pinned to the first line instead of the block center */
+  .skills-grid .pill{
+    align-items:flex-start;gap:6px;line-height:1.5;padding:6px 9px;font-size:12px;
+  }
+  .skills-grid .pills{gap:7px}
+  .skills-grid .pill .ico{margin-top:1px}
 
   .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;align-items:start}
   .proj.feature{grid-column:1 / -1}
